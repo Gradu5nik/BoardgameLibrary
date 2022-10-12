@@ -1,12 +1,23 @@
 using BoardgameLibrary.Data;
+using EFCoreBoardgameData;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+//DbAccess
+
+builder.Services.AddDbContext<EFCoreBoardgameDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
+        assembly => assembly.MigrationsAssembly(typeof(EFCoreBoardgameDbContext).Assembly.FullName));
+});
+
+//CustomServices
 builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
