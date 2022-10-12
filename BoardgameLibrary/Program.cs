@@ -1,4 +1,4 @@
-using BoardgameLibrary.Data;
+using BoardgameLibrary.BoardgameManagement;
 using EFCoreBoardgameData;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -18,7 +18,7 @@ builder.Services.AddDbContext<EFCoreBoardgameDbContext>(options =>
 });
 
 //CustomServices
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<IBoardgameRepository,BoardgameRepository>();
 
 var app = builder.Build();
 

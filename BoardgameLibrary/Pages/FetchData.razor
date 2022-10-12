@@ -2,14 +2,15 @@
 
 <PageTitle>Weather forecast</PageTitle>
 
-@using BoardgameLibrary.Data
-@inject WeatherForecastService ForecastService
+@using BoardgameLibrary.BoardgameManagement
+@using EFCoreBoardgameData.Models
+@inject IBoardgameRepository BoardgameService
 
-<h1>Weather forecast</h1>
+<h1>Boardgames</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (forecasts == null)
+@if (boardgames == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -18,20 +19,14 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Name</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var boardgame in boardgames)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@boardgame.Name</td>
                 </tr>
             }
         </tbody>
@@ -39,10 +34,11 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private IEnumerable<Boardgame> boardgames;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        var task = Task.Run(() => BoardgameService.GetAll());
+        boardgames = await task;
     }
 }
