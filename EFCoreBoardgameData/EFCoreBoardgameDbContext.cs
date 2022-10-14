@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EFCoreBoardgameData
 {
-    public class EFCoreBoardgameDbContext :DbContext
+    public class EFCoreBoardgameDbContext :IdentityDbContext
     {
         public EFCoreBoardgameDbContext(DbContextOptions options):base(options)
         {

@@ -1,7 +1,10 @@
 using BoardgameLibrary.BoardgameManagement;
 using EFCoreBoardgameData;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +19,11 @@ builder.Services.AddDbContext<EFCoreBoardgameDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
         assembly => assembly.MigrationsAssembly(typeof(EFCoreBoardgameDbContext).Assembly.FullName));
 });
+//Identity
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddEntityFrameworkStores<EFCoreBoardgameDbContext>();
+
+builder.Services.AddScoped<AuthenticationStateProvider,ServerAuthenticationStateProvider>();
 
 //CustomServices
 builder.Services.AddScoped<IBoardgameRepository,BoardgameRepository>();
@@ -35,6 +43,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//Identity
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
