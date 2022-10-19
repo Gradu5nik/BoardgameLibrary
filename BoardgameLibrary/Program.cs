@@ -22,7 +22,6 @@ builder.Services.AddDbContext<EFCoreBoardgameDbContext>(options =>
 //Identity
 builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddEntityFrameworkStores<EFCoreBoardgameDbContext>();
-
 builder.Services.AddScoped<AuthenticationStateProvider,ServerAuthenticationStateProvider>();
 
 //CustomServices
@@ -48,6 +47,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

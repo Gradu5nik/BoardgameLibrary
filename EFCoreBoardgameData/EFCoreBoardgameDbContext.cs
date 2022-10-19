@@ -17,5 +17,11 @@ namespace EFCoreBoardgameData
         }
 
         public DbSet<Boardgame> Boardgames { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
     }
 }
