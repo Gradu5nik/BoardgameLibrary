@@ -4,6 +4,7 @@
 @inject ICompositeViewEngine Engine
 <!DOCTYPE html>
 <html>
+ @*THIS LAYOUT IS FOR RAZOR PAGES*@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,8 +29,9 @@
                 <a class="navbar-brand" href="~/">BoardgameLibrary</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span> <!--..button for collapsed navbar with small screens.-->
                 </button>
+                
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     @{
                         var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
